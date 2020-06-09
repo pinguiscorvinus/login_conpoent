@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Login from '../compoents/Login'
+//引入react-bootstrap.Container 用來排版
 import { Container } from 'react-bootstrap'
 //引入SCSS
-import '../scss/Login_conpoent.scss'
+import '../scss/Login_component.scss'
 
 export class Homeindex extends Component {
   render() {

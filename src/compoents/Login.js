@@ -5,7 +5,7 @@ export class Login extends Component {
   render() {
     return (
       <div>
-        <Card>
+        <Card className="logincard">
           <Card.Body>
             <Form>
               <Form.Group controlId="formBasicEmail">

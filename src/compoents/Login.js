@@ -1,7 +1,18 @@
-import React, { Component } from 'react'
+import React from 'react'
+//引入Redux
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import {
+  fetchmemberdata,
+  passcurrentlogindata,
+} from '../action/Logindata_Action'
+//引入react-bootstrap
 import { Card, Form, Button } from 'react-bootstrap'
 
-export class Login extends Component {
+export class Login extends React.Component {
+  componentDidMount(){
+    this.props.fetchmemberdata()
+  }
   render() {
     return (
       <div>
@@ -27,5 +38,12 @@ export class Login extends Component {
     )
   }
 }
-
-export default Login
+// 取得Redux中store的值
+const mapStateToProps = (store) => {
+  return { logindata: store.LogincomponentReducers.logindata }
+}
+// 指示dispatch要綁定哪些action creators
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ fetchmemberdata,passcurrentlogindata }, dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -8,9 +8,6 @@ import {
 } from '../action/Logindata_Action'
 //引入react-bootstrap
 import { Card, Form, Button } from 'react-bootstrap'
-//引入sweetalert
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 
 export class Login extends React.Component {
   constructor(props) {
@@ -28,22 +25,7 @@ export class Login extends React.Component {
   sentlogindata = (logindata) => {
     let logindatas = logindata
     console.log(logindatas)
-    //錯誤處理
-    if (logindatas[0] === '') {
-      Swal.fire({
-        icon: 'error',
-        title: 'ERROR...',
-        text: '請確實輸入E-mail',
-      })
-    } else if (logindatas[1] === '') {
-      Swal.fire({
-        icon: 'error',
-        title: 'ERROR...',
-        text: '請確實輸入密碼',
-      })
-    } else {
-      // this.props.passcurrentlogindata(logindata)
-    }
+    // this.props.passcurrentlogindata(logindata)
   }
 
   render() {
@@ -65,6 +47,7 @@ export class Login extends React.Component {
                       Email: event.target.value,
                     })
                   }}
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
@@ -76,6 +59,7 @@ export class Login extends React.Component {
                       password: event.target.value,
                     })
                   }}
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="formBasicCheckbox">

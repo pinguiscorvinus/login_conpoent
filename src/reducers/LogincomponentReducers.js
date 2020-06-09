@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 //預設值
 let initState1 = {
-  currentlogindata: ['none', 'none'],
+  currentlogindata: ['', ''],
 }
 //取得會員資料
 const memberdata = (state = [], action) => {

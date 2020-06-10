@@ -11,6 +11,8 @@ import { Card, Form, Button } from 'react-bootstrap'
 //引入sweetalert2
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+
+import sha1 from 'sha1'
 const MySwal = withReactContent(Swal)
 
 export class Login extends React.Component {
@@ -29,21 +31,7 @@ export class Login extends React.Component {
   sentlogindata = (logindata) => {
     let logindatas = logindata
     console.log(logindatas)
-    if (logindatas[0] === '') {
-      MySwal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: '請確實輸入Email!',
-      })
-    } else if (logindatas[1] === '') {
-      MySwal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: '請確實輸入密碼!',
-      })
-    } else {
-      this.props.passcurrentlogindata(logindata)
-    }
+    this.props.passcurrentlogindata(logindata)
   }
 
   render() {
@@ -55,19 +43,55 @@ export class Login extends React.Component {
     const logindatas = this.props.logindata.currentlogindata
     const { memberdata = [] } = this.props.memberdata
     const reduxloginmail = logindatas[0]
-    const reduxloginpassword = logindatas[1]
+    const reduxloginpassword = sha1(logindatas[1])
     let memberdatas
     let memberemail
-    let mwmberpassword
+    let memberpassword
     if (memberdata.length > 0) {
       memberdatas = { memberdetail: memberdatas = {} } = memberdata[0]
       memberemail = memberdatas.memberdetail.Email
-      mwmberpassword = memberdatas.memberdetail.Password
+      memberpassword = memberdatas.memberdetail.Password
     }
-    // console.log(logindatas)
-    // console.log(reduxloginmail)
+    console.log(memberpassword)
+    console.log(reduxloginpassword)
     // console.log(reduxloginpassword)
-    let logincheck = () => {}
+    let logincheck = () => {
+      if (logindatas[0] === '') {
+        MySwal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '請確實輸入Email!',
+        })
+      } else if (logindatas[1] === '') {
+        MySwal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '請確實輸入密碼!',
+        })
+      } else {
+        if (reduxloginmail !== memberemail) {
+          MySwal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Email錯誤',
+          })
+        } else if (reduxloginpassword !== memberpassword) {
+          MySwal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '密碼錯誤',
+          })
+        } else if (
+          reduxloginmail === memberemail &&
+          reduxloginpassword === memberpassword
+        ) {
+          MySwal.fire('歡迎回來!', 'Redirect in 1 seconds...!', 'success')
+          setTimeout(function () {
+            window.location.href = './home'
+          }, 1000)
+        }
+      }
+    }
     return (
       <div>
         <Card className="logincard">
@@ -81,6 +105,7 @@ export class Login extends React.Component {
                     this.setState({
                       Email: event.target.value,
                     })
+                    this.sentlogindata(logindata)
                   }}
                   required
                 />
@@ -93,6 +118,7 @@ export class Login extends React.Component {
                     this.setState({
                       password: event.target.value,
                     })
+                    this.sentlogindata(logindata)
                   }}
                   required
                 />
@@ -104,6 +130,7 @@ export class Login extends React.Component {
                 variant="primary"
                 onClick={() => {
                   this.sentlogindata(logindata)
+                  logincheck()
                 }}
               >
                 登入

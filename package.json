@@ -24,6 +24,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "sass": "^1.26.8",
+    "sha1": "^1.1.1",
     "sweetalert2": "^9.14.3",
     "sweetalert2-react-content": "^3.0.1"
   },

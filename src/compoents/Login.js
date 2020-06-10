@@ -8,6 +8,10 @@ import {
 } from '../action/Logindata_Action'
 //引入react-bootstrap
 import { Card, Form, Button } from 'react-bootstrap'
+//引入sweetalert2
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 
 export class Login extends React.Component {
   constructor(props) {
@@ -17,7 +21,7 @@ export class Login extends React.Component {
       password: '',
     }
   }
-
+  //取得回傳會員資料
   componentDidMount() {
     this.props.fetchmemberdata()
   }
@@ -25,14 +29,35 @@ export class Login extends React.Component {
   sentlogindata = (logindata) => {
     let logindatas = logindata
     console.log(logindatas)
-    // this.props.passcurrentlogindata(logindata)
+    if (logindatas[0] === '') {
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '請確實輸入Email!',
+      })
+    } else if (logindatas[1] === '') {
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '請確實輸入密碼!',
+      })
+    } else {
+      this.props.passcurrentlogindata(logindata)
+    }
   }
 
   render() {
-    let loginemail = this.state.Email
-    let loginpassword = this.state.password
-    let logindata = [loginemail, loginpassword]
-    console.log(logindata)
+    const loginemail = this.state.Email
+    const loginpassword = this.state.password
+    const logindata = [loginemail, loginpassword]
+    const logindatas = this.props.logindata.currentlogindata
+    const { memberdata = [] } = this.props.memberdata
+    const memberdatas = memberdata[0].memberdetail
+    const membermail = memberdatas
+    console.log(memberdatas)
+    console.log(logindatas)
+    console.log(membermail)
+    let logincheck = () => {}
     return (
       <div>
         <Card className="logincard">
@@ -67,7 +92,6 @@ export class Login extends React.Component {
               </Form.Group>
               <Button
                 variant="primary"
-                type="submit"
                 onClick={() => {
                   this.sentlogindata(logindata)
                 }}
@@ -83,7 +107,10 @@ export class Login extends React.Component {
 }
 // 取得Redux中store的值
 const mapStateToProps = (store) => {
-  return { logindata: store.LogincomponentReducers.logindata }
+  return {
+    logindata: store.LogincomponentReducers.logindata,
+    memberdata: store.LogincomponentReducers.memberdata,
+  }
 }
 // 指示dispatch要綁定哪些action creators
 const mapDispatchToProps = (dispatch) => {

@@ -24,7 +24,7 @@ const logindata = (state = initState1, action) => {
   }
 }
 const LogincomponentReducers = combineReducers({
-  logindata,
   memberdata,
+  logindata,
 })
 export { LogincomponentReducers }

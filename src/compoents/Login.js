@@ -47,16 +47,26 @@ export class Login extends React.Component {
   }
 
   render() {
+    //傳送登入資料至REDUX
     const loginemail = this.state.Email
     const loginpassword = this.state.password
     const logindata = [loginemail, loginpassword]
+    //登入
     const logindatas = this.props.logindata.currentlogindata
     const { memberdata = [] } = this.props.memberdata
-    const memberdatas = memberdata[0].memberdetail
-    const membermail = memberdatas
-    console.log(memberdatas)
-    console.log(logindatas)
-    console.log(membermail)
+    const reduxloginmail = logindatas[0]
+    const reduxloginpassword = logindatas[1]
+    let memberdatas
+    let memberemail
+    let mwmberpassword
+    if (memberdata.length > 0) {
+      memberdatas = { memberdetail: memberdatas = {} } = memberdata[0]
+      memberemail = memberdatas.memberdetail.Email
+      mwmberpassword = memberdatas.memberdetail.Password
+    }
+    // console.log(logindatas)
+    // console.log(reduxloginmail)
+    // console.log(reduxloginpassword)
     let logincheck = () => {}
     return (
       <div>

@@ -1,11 +1,14 @@
 body{
-    background-image: url(../images/usa-1663497_1920.jpg);
-    background-size: cover;
+    background-color: lightgrey;
     .buttontologin{
         margin-top: 45vh;
         margin-left: 50vh;
     }
     .logininput{
         margin-top: 25vh;
+    }
+    .apilogin{
+        display: flex;
+        justify-content: center;
     }
 }

@@ -13,6 +13,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 import sha1 from 'sha1'
+import Apilogin from './Apilogin'
 const MySwal = withReactContent(Swal)
 
 export class Login extends React.Component {
@@ -137,6 +138,7 @@ export class Login extends React.Component {
               </Button>
             </Form>
           </Card.Body>
+          <Apilogin />
         </Card>
       </div>
     )
